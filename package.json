@@ -1,0 +1,30 @@
+{
+  "name": "mancala",
+  "version": "0.1.0",
+  "description": "A Typescript implementation of the classic mancala game",
+  "main": "index.js",
+  "license": "MIT",
+  "private": false,
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "scripts": {
+    "start": "ts-node ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^16.3.3",
+    "@types/prompt-sync": "^4.1.1",
+    "husky": "^3.1.0",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "ts-node": "^10.1.0",
+    "tslint": "^5.20.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^4.3.5"
+  },
+  "dependencies": {
+    "prompt-sync": "^4.2.0"
+  }
+}
