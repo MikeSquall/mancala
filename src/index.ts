@@ -1,4 +1,4 @@
-import { displayBoard, getPitNumber, initBoard } from "./utils";
+import { displayBoard, getPitNumber, initBoard, move, getWinner } from "./utils";
 import { p1, p2 } from "./consts";
 
 const initGame = () => {
@@ -7,18 +7,25 @@ const initGame = () => {
   let turn = 0;
   let activePlayer: string;
 
-  const board = initBoard();
+  let board = initBoard();
 
   while (board.p1Store + board.p2Store !== total) {
+    let playAgain: boolean;
     displayBoard(board);
-
     activePlayer = turn % 2 === 0 ? p1 : p2;
 
-    const index = getPitNumber({ board, player: activePlayer });
+    const pitNumber = getPitNumber({ board, player: activePlayer });
+
+    const moveResult = move({ board, pitNumber, player: activePlayer });
+    board = moveResult.board;
+    playAgain = moveResult.playAgain;
 
     // change turn
-    turn += 1;
+    if (!playAgain) {
+      turn += 1;
+    }
   }
+  console.log(getWinner(board));
 };
 
 initGame();
