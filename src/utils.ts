@@ -73,7 +73,7 @@ const harvest = (r: { pitNumber: number, player: string, board: Board, boardInde
     if (oppositePitContent > 0) {
       // console.log('Harvest !!');
       playerBoardIndex === 0
-        ? currentBoard.p2Store += oppositePitContent + 1 
+        ? currentBoard.p2Store += oppositePitContent + 1
         : currentBoard.p1Store += oppositePitContent + 1;
       currentBoard.pits[playerBoardIndex][r.pitNumber] = 0;
       currentBoard.pits[oppositeBoardIndex][r.pitNumber] = 0;
@@ -98,7 +98,7 @@ export const move = (r: { pitNumber: number, player: string, board: Board }): { 
     if (boardIndex === 1) {
       // console.log('on line p1', currentIndex);
       currentIndex++;
-      if (currentIndex <= 5) {       
+      if (currentIndex <= 5) {
         currentBoard.pits[1][currentIndex]++;
       } else {
         // console.log('switch to p2 line');
@@ -110,7 +110,7 @@ export const move = (r: { pitNumber: number, player: string, board: Board }): { 
       }
     } else {
       // console.log('on line p2', currentIndex);
-      currentIndex--;      
+      currentIndex--;
       if (currentIndex >= 0) {
         currentBoard.pits[0][currentIndex]++;
       } else {
@@ -137,17 +137,33 @@ export const move = (r: { pitNumber: number, player: string, board: Board }): { 
     }
     // console.log(currentBoard.pits[0]);
     // console.log(currentBoard.pits[1]);
-    // console.log('---------------------');    
+    // console.log('---------------------');
   }
   currentBoard.pits[getBoardIndex(r.player)][startIndex] = pitValue;
 
   return { playAgain, board: currentBoard };
 };
 
+const pitsSum = (pits: number[]): number => pits.reduce((acc, val) => acc + val, 0);
+
+export const checkGameOver = (board: Board): Board => {
+  const currentBoard = {...board};
+  if (pitsSum(board.pits[0]) === 0) {
+    currentBoard.p2Store += pitsSum(board.pits[1]);
+    currentBoard.pits[1].map(p => p = 0);
+  }
+  if (pitsSum(board.pits[1]) === 0) {
+    currentBoard.p1Store += pitsSum(board.pits[0]);
+    currentBoard.pits[0].map(p => p = 0);
+  }
+
+  return currentBoard;
+};
+
 export const getWinner = (board: Board) => {
   return board.p1Store > board.p2Store
-    ? p1
+    ? p1 + ' won'
     : board.p1Store === board.p2Store
       ? 'Draw'
-      : p2;
+      : p2 + ' won';
 };

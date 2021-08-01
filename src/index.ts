@@ -1,4 +1,4 @@
-import { displayBoard, getPitNumber, initBoard, move, getWinner } from "./utils";
+import { displayBoard, getPitNumber, initBoard, move, checkGameOver, getWinner } from "./utils";
 import { p1, p2 } from "./consts";
 
 const initGame = () => {
@@ -24,8 +24,11 @@ const initGame = () => {
     if (!playAgain) {
       turn += 1;
     }
+
+    board = checkGameOver(board);
   }
   console.log(getWinner(board));
+  displayBoard(board);
 };
 
 initGame();
